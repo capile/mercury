@@ -13,3 +13,4 @@ There is a makespin.sh script to create *.dat files out of the *.out files (spin
 
 ### Added By JPR
 * A Mecury-T manual and the original publication related to this program can be found in /docs/.
+* Changed compiler to G95 in Makefile.py. G95 is free compiler that can be found [here](http://www.fortran.com/the-fortran-company-homepage/whats-new/g95-windows-download/)
