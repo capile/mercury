@@ -7,6 +7,7 @@ import sys
 import os
 import string
 import subprocess
+import pdb
 
 LOG_NAME = 'compilation.log'
 
@@ -21,7 +22,7 @@ LOG_NAME = 'compilation.log'
 #GDB_OPTIONS = "-g3"
 #PROFILING_OPTIONS = "-g -pg"
 
-COMPILATOR = "ifort"
+COMPILATOR = "G95"
 
 DEBUG_OPTIONS = "-g -check all -fpe0 -warn -traceback -debug extended"
 OPTIMIZATIONS = "-O3 -Bstatic"
@@ -62,7 +63,7 @@ class sourceFile(object):
   #~ COMPILATOR = "ifort"
   #~ OPTIONS = "-vec-report0 -i-dynamic -mcmodel=medium -shared-intel -L/usr/lib64/atlas -llapack"
 
-  COMPILATOR = "gfortran"
+  COMPILATOR = "G95"
   OPTIONS = "-O3 -march=native"
 
   def __init__(self, filename, name=None, isProgram=False, extra_files=None):
@@ -195,23 +196,19 @@ class sourceFile(object):
     included=[]
 
     for lsave in lines:
-      l=string.expandtabs(string.lower(lsave)[:-1],1)
-      words=string.split(string.lstrip(l))
+      words=lsave.split()
       if len(words) > 0:
         if words[0] == 'use':
-          used.append(string.split(words[1],',')[0])
+          used.append(words[1].split(',')[0])
         if words[0] == 'module':
           if len (words) == 2 or words[1] != "procedure":
             defined.append(words[1])
         if words[0] == 'include':
-          newstring = string.replace(words[1],'\'','')
-          newstring = string.replace(newstring,'\"','')
+          newstring = words[1].replace('\'','')
+          newstring = newstring.replace('\"','')
           included.append(newstring)
-      l=string.expandtabs(lsave[:-1],1)
-      words=string.split(string.lstrip(l))
-      if len(words) > 0:
         if words[0] == '#include':
-          newstring = string.replace(words[1],'\"','')
+          newstring = words[1].replace('\"','')
           included.append(newstring)
 
 # We delete all dependencies that are present several number of times.
@@ -230,7 +227,7 @@ class sourceFile(object):
         source = sourceFile.findModule[mod]
       except:
         print("Error: Unable to locate the module '"+mod+"'")
-      obj = string.replace(source.filename,'.f90','.o')
+      obj = source.filename.replace('.f90','.o')
       dependances.append(obj)
 
     return dependances
@@ -310,9 +307,10 @@ class sourceFile(object):
 
         # if returnCode is not 0, then there was a problem
         if (returnCode != 0):
+          pdb.set_trace()
           # We write compilation errors in the following file.
           f = open(LOG_NAME,'w')
-          f.write(process_stderr)
+          f.write(str(process_stderr))
           f.close()
 
           print("Compilation error, see '%s'" % LOG_NAME)
@@ -322,7 +320,7 @@ class sourceFile(object):
           if (len(process_stderr) != 0):
             # We write compilation errors in the following file.
             f = open(LOG_NAME,'a')
-            f.write(process_stderr)
+            f.write(str(process_stderr))
             f.close()
 
 
@@ -556,8 +554,8 @@ if force:
 
 # Before compiling, we delete the previous compilation log. Indeed, we need to append the several warnings in the same file
 # But we do not want to have infos of the previous compilation in it.
-if os.path.isfile(LOG_NAME):
-  os.remove(LOG_NAME)
+#if os.path.isfile(LOG_NAME):
+#  os.remove(LOG_NAME)
 
 # We create the binaries
 if debug:
