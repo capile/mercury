@@ -145,7 +145,6 @@ subroutine mdt_hy (time,h0,tol,en,am,jcen,rcen,nbod,nbig,m,x,v,s,rphys,rcrit,rce
     
   !------------------------------------------------------------------------------
   
-  
   hby2 = h0 * .5d0
   nclo = 0
   colflag = 0
