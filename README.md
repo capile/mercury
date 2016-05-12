@@ -8,7 +8,7 @@
 * tides_constant_GR.f90 is the file where the tidal parameters are and where the initialization is done. If you modify this file, you have to re-compile.
 * There are 2 IDL scripts to charge and plot the data (charge_comp and script_plot_comp). 
 
-There is a makespin.sh script to create *.dat files out of the *.out files (spin*.out, horb*.out, dEdt*.out). It also executes element.in to have the PLANETi.aei files. This is used typically when you want to check a running simulation.
+There is a makespin.sh script to create .dat files out of the .out files (spin.out, horb.out, dEdt.out). It also executes element.in to have the PLANETi.aei files. This is used typically when you want to check a running simulation.
 * All the rest can be used as the normal Mercury code.
 
 ### Added By JPR
