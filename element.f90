@@ -201,7 +201,7 @@ program element
 40   read (10,'(a250)') string
      if (string(1:1).eq.')') goto 40
      call mio_spl (250,string,nsub,lim)
-     infile(j)(1:(lim(2,1)-lim(1,1)+1)) = string(lim(1,1):lim(2,1))
+     infile(j) = string(lim(1,1):lim(2,1))
      inquire (file=infile(j), exist=test)
      if (.not.test) call mio_err (6,mem(81),lmem(81),mem(88),lmem(88),' ',1,infile(j),80)
   end do
