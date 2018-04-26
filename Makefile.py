@@ -11,25 +11,25 @@ import pdb
 
 LOG_NAME = 'compilation.log'
 
-COMPILATOR = "gfortran"
-
-DEBUG_OPTIONS = "-pedantic-errors -Wall -Wconversion -Wextra -Wunreachable-code -fbacktrace" + \
-  " -g3 -fbounds-check -O0" + \
-  " -fstack-protector-all -fno-automatic -Wuninitialized -ftrapv -fno-automatic -fimplicit-none" + \
-  " -ffpe-trap=invalid,zero,overflow,underflow "
-OPTIMIZATIONS = "-O3 -ffast-math -pipe -finit-real=nan"
-TEST_OPTIONS = "-O3 -pipe -finit-real=nan"
-GDB_OPTIONS = "-g3"
-PROFILING_OPTIONS = "-g -pg"
+#COMPILATOR = "gfortran"
+#
+#DEBUG_OPTIONS = "-pedantic-errors -Wall -Wconversion -Wextra -Wunreachable-code -fbacktrace" + \
+#  " -g3 -fbounds-check -O0" + \
+#  " -fstack-protector-all -fno-automatic -Wuninitialized -ftrapv -fno-automatic -fimplicit-none" + \
+#  " -ffpe-trap=invalid,zero,overflow,underflow "
+#OPTIMIZATIONS = "-O3 -ffast-math -pipe -finit-real=nan"
+#TEST_OPTIONS = "-O3 -pipe -finit-real=nan"
+#GDB_OPTIONS = "-g3"
+#PROFILING_OPTIONS = "-g -pg"
 
 ## Uncomment to change compiler to G95
-#COMPILATOR = "G95"
-#
-#DEBUG_OPTIONS = "-g -check all -fpe0 -warn -traceback -debug extended"
-#OPTIMIZATIONS = "-O3 -Bstatic"
-#TEST_OPTIONS = OPTIMIZATIONS
-#GDB_OPTIONS = "-g"
-#PROFILING_OPTIONS = "-g -pg"
+COMPILATOR = "ifort"
+
+DEBUG_OPTIONS = "-g -check all -fpe0 -warn -traceback -debug extended"
+OPTIMIZATIONS = "-O3 -Bstatic"
+TEST_OPTIONS = OPTIMIZATIONS
+GDB_OPTIONS = "-g"
+PROFILING_OPTIONS = "-g -pg"
 
 class sourceFile(object):
   """Define an object linked to a fortran 90 source code that will
@@ -61,11 +61,11 @@ class sourceFile(object):
 
   # We define a dictionary to make the correspondance between a source filename and the object associated
   findSource = {}
-  #~ COMPILATOR = "ifort"
-  #~ OPTIONS = "-vec-report0 -i-dynamic -mcmodel=medium -shared-intel -L/usr/lib64/atlas -llapack"
+  COMPILATOR = "ifort"
+  OPTIONS = "-vec-report0 -i-dynamic -mcmodel=medium -shared-intel -L/usr/lib64/atlas -llapack"
 
-  COMPILATOR = "G95"
-  OPTIONS = "-O3 -march=native"
+  #COMPILATOR = "g95"
+  #OPTIONS = "-O3 -march=native"
 
   def __init__(self, filename, name=None, isProgram=False, extra_files=None):
     """Will check everything that is included in the source code
